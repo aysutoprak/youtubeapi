@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>YoutubeAPI</title>
+  </head>
+  <body>
+    <script src="https://apis.google.com/js/api.js"></script>
+
+    <script>
+      /**
+       * Sample JavaScript code for youtube.channels.list
+       * See instructions for running APIs Explorer code samples locally:
+       * https://developers.google.com/explorer-help/code-samples#javascript
+       */
+
+      function authenticate() {
+        return gapi.auth2
+          .getAuthInstance()
+          .signIn({ scope: "https://www.googleapis.com/auth/youtube.readonly" })
+          .then(
+            function () {
+              console.log("Sign-in successful");
+            },
+            function (err) {
+              console.error("Error signing in", err);
+            }
+          );
+      }
+      function loadClient() {
+        gapi.client.setApiKey("AIzaSyBaDxT-XSmntC6WZ6gjdldRCKUPPTUmmuQ");
+        return gapi.client
+          .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+          .then(
+            function () {
+              console.log("GAPI client loaded for API");
+            },
+            function (err) {
+              console.error("Error loading GAPI client for API", err);
+            }
+          );
+      }
+      // Make sure the client is loaded and sign-in is complete before calling this method.
+      function execute() {
+        return gapi.client.youtube.channels
+          .list({
+            part: ["statistics"],
+            mine: true,
+          })
+          .then(
+            function (response) {
+              // Handle the results here (response.result has the parsed body).
+              console.log("Response", response.result);
+              console.log(response.result.items[0].statistics.videoCount);
+              document.getElementById("vid").innerHTML =
+                response.result.items[0].statistics.videoCount;
+              document.getElementById("view").innerHTML =
+                response.result.items[0].statistics.viewCount;
+              document.getElementById("subs").innerHTML =
+                response.result.items[0].statistics.subscriberCount;
+            },
+            function (err) {
+              console.error("Execute error", err);
+            }
+          );
+      }
+      gapi.load("client:auth2", function () {
+        gapi.auth2.init({
+          client_id:
+            "995412406823-h4965sdh07233o2bvlpnvcjh29fvbitn.apps.googleusercontent.com",
+          plugin_name: "googleapitest",
+        });
+      });
+    </script>
+
+    <script>
+      function myFunction() {
+        document.getElementById("demo").innerHTML =
+          response.result.items[0].statistics.videoCount;
+      }
+    </script>
+
+    <div class="app">
+      <div class="buttons">
+        <button onclick="authenticate().then(loadClient)">
+          Authorize and Load
+        </button>
+        <button onclick="execute()">Execute</button>
+      </div>
+
+      <div class="info">
+        <div class="vid_div">
+          <p>Video Count :</p>
+          <p id="vid">-</p>
+        </div>
+        <div class="view_div">
+          <p>View Count :</p>
+          <p id="view">-</p>
+        </div>
+        <div class="subs_div">
+          <p>Subscriber Count :</p>
+          <p id="subs">-</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

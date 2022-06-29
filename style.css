@@ -1,0 +1,51 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(175, 236, 236);
+}
+
+.app {
+  background-color: rgb(143, 189, 216);
+  border-radius: 5px;
+  padding: 50px;
+  margin: 50px;
+}
+
+.info {
+  margin: 20px;
+  display: flex;
+}
+
+.vid_div,
+.view_div,
+.subs_div {
+  text-align: center;
+  height: 100px;
+  background-color: rgb(125, 181, 214);
+  margin: 20px;
+  border-radius: 50%;
+}
+
+button {
+  background-color: rgb(93, 80, 214);
+  margin: auto 20px auto 20px;
+  border: 3px solid;
+  border-radius: 5px;
+  border-color: rgb(11, 13, 153);
+  color: white;
+  height: 30px;
+}
+
+button:hover {
+  background-color: white;
+  color: rgb(11, 13, 153);
+}
